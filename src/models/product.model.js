@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 
+const imageSchema = new mongoose.Schema(
+
+    {
+        public_id:String,
+        url:String
+    },
+    { _id: false }
+
+)
+
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -22,6 +32,11 @@ const productSchema = new mongoose.Schema({
         required: true,
         index: true // for category-based queries
     },
+    images:{
+        type: [imageSchema],
+        validate: [ arr => arr.length >= 1, "At least one image is required"] // max 5 images
+
+    },
     stock: {
         type: Number,
         required: true,
@@ -35,7 +50,7 @@ const productSchema = new mongoose.Schema({
 }, { timestamps: true }) ;
 
 //Compound index for category and price
-productSchema.index({ category:1, price:1 }); 
+productSchema.index({ category: 1, price: 1 }); 
 
 module.exports = mongoose.model('Product', productSchema )   
 
