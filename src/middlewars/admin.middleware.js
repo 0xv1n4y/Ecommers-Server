@@ -4,7 +4,7 @@ const User = require('../models/user.Model');
 // Middleware to check if the user is an admin
 const isAdmin = async (req, res, next) => {
     
-        const user = await User.findById(req.userId); // Assuming req.userId is set after authentication
+        const user = await User.findById(req.user.id); // Assuming req.userId is set after authentication
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
