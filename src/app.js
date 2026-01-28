@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth.routes');
 const productRoutes = require('./routes/product.routes');
 const cartRoutes = require('./routes/cart.routes');
 const orderRoutes = require('./routes/order.route');
+const paymentRoutes = require('./routes/payment.route');
 
 //Importing error handling middleware
 const { errorHandler } = require("./middlewars/error.middleware");
@@ -25,6 +26,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/payments', paymentRoutes);
 
 //Health check route
 app.get('/', (req, res) => {
