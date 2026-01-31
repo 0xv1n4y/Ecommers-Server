@@ -1,4 +1,5 @@
 const authService = require('../services/auth.service');
+const User = require('../models/user.Model');
 
 //User Registration Controller
 const register = async (req, res) => {
@@ -21,7 +22,8 @@ const login = async (req, res) => {
     try {
         const {email, password} = req.body;
         const {user, token} = await authService.loginUser({email, password});
-        res.status(200).json({success: true, token, user: {
+        res.cookie('access_token', token, { httpOnly: true, secure: true, sameSite: 'Strict', maxAge: 7 * 24 * 60 * 60 * 1000, });
+        res.status(200).json({success: true, user: {
         id: user._id,
         name: user.name,
         email: user.email,
@@ -31,5 +33,7 @@ const login = async (req, res) => {
         res.status(400).json({success: false, message: error.message});
     }   
 };
+
+
 
 module.exports = { register, login };
